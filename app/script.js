@@ -19,6 +19,7 @@ function scroller(obj) {
 
 	var isScrolling = 0,
 		step = 1,
+		minStep = 0,
 		ms = 60,
 		timerID = 0;
 
@@ -30,7 +31,7 @@ function scroller(obj) {
 		obj.style.top = newTop;
 
 		timerID =window.setTimeout(startScrolling, ms);
-	}
+	};
 
 	var stopScrolling = function() {
 
@@ -38,18 +39,43 @@ function scroller(obj) {
 
 		window.clearTimeout(timerID);
 		
-	}
+	};
 
 
-	var startOrStup = function() {
+	var startOrStop = function() {
 
 		if(isScrolling) {
 			stopScrolling();
 		} else {
 			startScrolling();
 		}
-	}
+	};
 
-	obj.onclick = startOrStup;
+	var userInput = function(keyPress) 
+	{
+		if (!keyPress) keyPress = event;			
 
-}
+		switch (keyPress.keyCode) 
+		{
+			case 10: // Return
+			case 13: // Enter
+				startOrStop();
+			break;
+			case 39: // Right arrow: accelerate the stepping
+				step++;
+			break;
+			case 37: // Left arrow: decelerate the stepping
+				if(step > minStep) step--;
+			break;			
+			default:
+				// alert(keyPress.keyCode);
+				break;
+		}
+
+		return false;
+	};
+
+
+	obj.onclick = startOrStop;
+	document.onkeyup = userInput;
+};
