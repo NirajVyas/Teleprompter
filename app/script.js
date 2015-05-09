@@ -51,12 +51,10 @@ function scroller(obj) {
 		}
 	};
 
-	var userInput = function(keyPress) 
-	{
+	var userInput = function(keyPress) {
 		if (!keyPress) keyPress = event;			
 
-		switch (keyPress.keyCode) 
-		{
+		switch (keyPress.keyCode) {
 			case 10: // Return
 			case 13: // Enter
 				startOrStop();
